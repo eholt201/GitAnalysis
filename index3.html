@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="style3.css">
+  <title></title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js">
+
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <p class="logo">GitAnalysis</p>
+    </div>
+    <div class="searchbar animated fadeInDown" id="grid-1">
+
+      <h1>Welcome to GitAnalysis</h1>
+      <p>GitAnalysis is a tool for university students to use in order to analyse their
+        GitHub repositories. The report generated calculates how much each student has contirbuted
+        to the project over the desired time period.</p>
+      <p class="toHide">Please Enter the Repository Link: </p>
+
+
+      <input type="text" id="search" class="search hide toHide" placeholder="Enter Repository Link">
+      <button type="button" class="searchButton search toHide">Generate Report</button>
+    </div>
+
+    <div class="title-1" id="title-1">
+      <h3 class="title-1-text"><u><b>Overall Contribution</b></u></h3>
+    </div>
+
+    <div class="container__table" id="grid-2">
+      <table class="total-table">
+
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Commits</th>
+            <th>Additions</th>
+            <th>Deletions</th>
+            <th>%</th>
+          </tr>
+        </thead>
+        <tbody id="data__table">
+
+        </tbody>
+      </table>
+    </div>
+
+    <div class="piechart" id="grid-3">
+      <div id="pie-container">
+        <canvas id="piechart" style="width:100% !important"></canvas>
+      </div>
+    </div>
+
+    <div class="title-2" id="title-2">
+      <h3 class="title-2-text"><u><b>Contributions by Week</b></u></h3>
+    </div>
+
+    <div class="barchart" id="grid-4">
+      <div id="bar-container">
+        <canvas id="barchart"></canvas>
+      </div>
+    </div>
+
+    <div class="title-3" id="title-3">
+      <h3 class="title-3-text"><u><b>Behaviour</b></u></h3>
+    </div>
+    <div class="behaviour-container" id="grid-5">
+      <h4>Why Behaviour is Important:</h4>
+      <ul>
+        <li>Repository interaction behaviours vary greatly between users</li>
+        <li>Some users 'commit' after only a few lines of code</li>
+        <li>Whereas others commit after a full day of work</li>
+        <li>This is why knowing a users average Additions and Deletions <b><u>per commit</u></b> is important</li>
+      </ul>
+    </div>
+    <div class="behaviour-table-container" id="grid-6">
+      <table class="behaviour-table">
+
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Avg. Additions</th>
+            <th>Avg. Deletions</th>
+          </tr>
+        </thead>
+        <tbody id="behaviour-table-body">
+
+        </tbody>
+    </div>
+  </div>
+</body>
+
+</html>
+<script type="text/javascript" src="appp.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
