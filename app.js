@@ -33,7 +33,7 @@ const generateTable = (users) => {
     });
 
     let percentageContribution = (((totalAdditions-totalDeletions)/overallTeamContribution)*100).toFixed(1);
-    
+
     tableContents += `<tr>`;
     tableContents += `<td>${user.author.login}</td>`;
     tableContents += `<td>${user.total}</td>`;
@@ -300,11 +300,31 @@ searchButton.addEventListener("click", () => {
   animate("id", "grid-6", "fadeInRight")
   //changeVisibility("hide");
   animate("class", "toHide", "fadeOutLeft");
-  document.getElementById('title-1').scrollIntoView({
-    behavior: 'smooth',
-    block: 'end'
-  });
+
+  var delayInMilliseconds = 500;
+  setTimeout(function() {
+      document.getElementById('title-1').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    })
+  }, delayInMilliseconds);
 })
+
+const pdf = document.querySelector(".pdf")
+
+pdf.addEventListener("click", () => {
+  genPDF();
+})
+
+const genPDF = () => {
+  var body = document.body;
+  var doc = new jsPDF();
+
+  doc.addHTML(body);
+
+  doc.save("output.pdf")
+
+}
 
 
 
