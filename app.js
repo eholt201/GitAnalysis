@@ -32,7 +32,7 @@ const generateTable = (users) => {
       testArr.push(date);
     });
 
-    let percentageContribution = (((totalAdditions-totalDeletions)/overallTeamContribution)*100).toFixed(1);
+    let percentageContribution = (((totalAdditions - totalDeletions) / overallTeamContribution) * 100).toFixed(1);
 
     tableContents += `<tr>`;
     tableContents += `<td>${user.author.login}</td>`;
@@ -303,28 +303,12 @@ searchButton.addEventListener("click", () => {
 
   var delayInMilliseconds = 500;
   setTimeout(function() {
-      document.getElementById('title-1').scrollIntoView({
+    document.getElementById('title-1').scrollIntoView({
       behavior: 'smooth',
       block: 'start'
     })
   }, delayInMilliseconds);
 })
-
-const pdf = document.querySelector(".pdf")
-
-pdf.addEventListener("click", () => {
-  genPDF();
-})
-
-const genPDF = () => {
-  var body = document.body;
-  var doc = new jsPDF();
-
-  doc.addHTML(body);
-
-  doc.save("output.pdf")
-
-}
 
 
 
