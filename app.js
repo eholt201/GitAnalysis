@@ -311,7 +311,6 @@ searchButton.addEventListener("click", () => {
 })
 
 
-
 // test repos
 // 4 contributors
 // https://github.com/kirstyadair/IP2-project
