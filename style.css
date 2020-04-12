@@ -160,8 +160,11 @@ li {
 }
 
 @media print {
-    body {
-         max-width : 1000px;
-         height : auto;
-    }
+      body, html, #wrapper {
+          height: auto;
+          margin: 0;
+          float: none;
+          display: block;
+
+      }
 }
