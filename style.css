@@ -160,11 +160,26 @@ li {
 }
 
 @media print {
-      body, html, #wrapper {
-          height: auto;
+      body, html, #wrapper, {
+          height: 200%;
           margin: 0;
           float: none;
           display: block;
 
+      }
+
+      .container {
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 4em;
+        margin: 0;
+        height: 200%;
+      }
+
+      #grid-1, #grid-5 {
+        display: none;
+      }
+
+      #barchart {
+        max-width: 100%;
       }
 }
