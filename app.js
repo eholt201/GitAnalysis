@@ -346,7 +346,8 @@ const getDates = (users) => {
   timeButton.addEventListener("click", () => {
     getTimeFrame();
 
-
+    animate("class", "date-hide", "fadeOutLeft");
+    animate("id", "print-container", "fadeInRight");
     generateTable(jsonData.data, dateTestArr);
   })
 }

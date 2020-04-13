@@ -26,10 +26,12 @@
       <div id="input-container">
 
         <div id="generate-container">
-          <input type="text" id="search" class="search hide toHide" placeholder="Enter Repository Link">
-          <button type="button" id="generate-btn" class="searchButton search toHide">Generate Report</button>
+          <form class="generate">
+            <input type="text" id="search" class="search hide toHide" placeholder="Enter Repository Link">
+            <button type="button" id="generate-btn" class="searchButton search toHide">Generate Report</button>
+          </form>
         </div>
-        <div id="date-container">
+        <div id="date-container" class="date-hide">
           <form>
             <span>Start Date: </span>
             <select id="start-date">

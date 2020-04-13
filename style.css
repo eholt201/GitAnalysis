@@ -17,7 +17,7 @@ body {
   display: grid;
   grid-gap: 1em;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 40px 220px auto auto auto;
+  grid-template-rows: 40px 230px auto auto auto;
   max-width: 1000px;
   margin: auto;
 }
@@ -49,7 +49,7 @@ body {
 }
 
 .search {
-  margin: 10px;
+  /*margin: 10px;*/
 }
 
 #grid-1 {
@@ -213,4 +213,51 @@ li {
   left: 0;
   right: 0;
   visibility: hidden;
+}
+
+form.generate {
+  max-width: 200px;
+  margin: auto;
+  display: inline;
+}
+
+form.generate input[type=text] {
+  padding: 5px;
+  font-size: 17px;
+  border: 1px solid grey;
+  background: #d3d3d3;
+  border-radius: 10px 0px 0px 10px;
+  margin-right: none;
+}
+
+form.generate input {
+  border-radius: 0px 10px 10px 0px;
+}
+
+form.generate button, #example-print {
+  padding: 5px;
+  background: #202020;
+  color: white;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-left: none;
+}
+
+form.generate button:hover, #example-print {
+  background: #FFDEAD;
+  color: #313131;
+  border-radius: 0px 10px 10px 0px;
+}
+
+form.generate::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+#example-print {
+  padding: 10px;
+  border-radius: 10px;
 }
