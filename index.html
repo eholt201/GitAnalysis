@@ -9,6 +9,7 @@
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
 <body>
   <div class="container">
     <div class="header">
@@ -22,12 +23,34 @@
         to the project over the desired time period.</p>
       <p class="toHide">Please Enter the Repository Link: </p>
 
+      <div id="input-container">
 
-      <input type="text" id="search" class="search hide toHide" placeholder="Enter Repository Link">
-      <button type="button" class="searchButton search toHide">Generate Report</button>
-      <form>
-        <input type=button name=print value="Print" onClick="window.print()">
-      </form>
+        <div id="generate-container">
+          <input type="text" id="search" class="search hide toHide" placeholder="Enter Repository Link">
+          <button type="button" id="generate-btn" class="searchButton search toHide">Generate Report</button>
+        </div>
+        <div id="date-container">
+          <form>
+            <span>Start Date: </span>
+            <select id="start-date">
+              <option>Choose a number</option>
+            </select>
+            <span>Timeframe: </span>
+            <select id="timeframe">
+              <option>Select Timeframe</option>
+              <option value="4">4 Weeks</option>
+              <option value="8">8 Weeks</option>
+              <option value="12">12 Weeks</option>
+              <option value="16">16 Weeks</option>
+            </select>
+          </form>
+        </div>
+        <div id="print-container">
+          <form id="myForm">
+            <input id="example-print" type=button name=print value="Print" onClick="window.print()">
+          </form>
+        </div>
+      </div>
     </div>
 
     <div class="title-1" id="title-1">

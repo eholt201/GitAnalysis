@@ -17,7 +17,7 @@ body {
   display: grid;
   grid-gap: 1em;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 40px auto auto auto auto;
+  grid-template-rows: 40px 220px auto auto auto;
   max-width: 1000px;
   margin: auto;
 }
@@ -165,7 +165,6 @@ li {
           margin: 0;
           float: none;
           display: block;
-
       }
 
       .container {
@@ -175,11 +174,43 @@ li {
         height: 200%;
       }
 
-      #grid-1, #grid-5 {
+      #grid-1 {
         display: none;
       }
 
       #barchart {
         max-width: 100%;
       }
+}
+
+#input-container {
+    width: 100%;
+    height: 80px;
+    position: relative;
+
+}
+
+#generate-container {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+}
+
+#date-container {
+  position: absolute;
+  z-index: 999;
+  left: 0;
+  right: 0;
+
+  visibility: hidden;
+  position: inline;
+}
+
+#print-container {
+  position: absolute;
+  z-index: 10000;
+  left: 0;
+  right: 0;
+  visibility: hidden;
 }

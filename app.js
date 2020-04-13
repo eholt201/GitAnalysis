@@ -13,14 +13,22 @@ const generateTable = (users) => {
   let totalUserInputs = [];
   let overallTeamContribution = 0;
 
-  let testArr = [];
+  let dateTestArr = [];
+
+  //date test
+  let totalWeeks = 0;
+
 
   users.forEach((user) => {
     user.weeks.forEach((week) => {
       overallTeamContribution += (week.a - week.d);
     });
+    totalWeeks = user.weeks.length;
   });
 
+  console.log(totalWeeks)
+
+  let j = 0;
   users.forEach((user) => {
     let totalCommits = user.total;
 
@@ -28,9 +36,17 @@ const generateTable = (users) => {
       totalAdditions += week.a;
       totalDeletions += week.d;
 
-      let date = moment.unix(week.w).format("DD/MM/YYYY");
-      testArr.push(date);
+      if (j < totalWeeks) {
+        let date = moment.unix(week.w).format("DD/MM/YYYY");
+        dateTestArr.push(date);
+
+        j++;
+      }
     });
+
+    //dropdown menu test
+
+
 
     let percentageContribution = (((totalAdditions - totalDeletions) / overallTeamContribution) * 100).toFixed(1);
 
@@ -45,6 +61,14 @@ const generateTable = (users) => {
     totalAdditions = 0;
     totalDeletions = 0;
   })
+
+  var select = document.getElementById("example-select");
+  for (index in dateTestArr) {
+    select.options[select.options.length] = new Option(dateTestArr[index], index);
+  }
+
+
+
   document.getElementById("data__table").innerHTML = tableContents;
 
 
@@ -55,7 +79,7 @@ const generateTable = (users) => {
 
   //test
 
-  console.log(testArr);
+  console.log(dateTestArr);
 }
 
 
@@ -300,6 +324,7 @@ searchButton.addEventListener("click", () => {
   animate("id", "grid-6", "fadeInRight")
   //changeVisibility("hide");
   animate("class", "toHide", "fadeOutLeft");
+  animate("id", "date-container", "fadeInRight")
 
   var delayInMilliseconds = 500;
   setTimeout(function() {
