@@ -1,50 +1,32 @@
 const userURL = document.querySelector("#search")
 const searchButton = document.querySelector(".searchButton")
+const timeButton = document.querySelector("#time-period-btn")
 const firstUsername = document.querySelector(".user__one-name")
 const firstContributions = document.querySelector(".user__one-contributions")
 
 let jsonData = "";
 
-const generateTable = (users) => {
-
+const generateTable = (users, dateTestArr) => {
   let tableContents = "";
   let totalAdditions = 0;
   let totalDeletions = 0;
   let totalUserInputs = [];
   let overallTeamContribution = 0;
 
-  let dateTestArr = [];
-
-  //date test
-  let totalWeeks = 0;
-
-
   users.forEach((user) => {
     user.weeks.forEach((week) => {
       overallTeamContribution += (week.a - week.d);
     });
-    totalWeeks = user.weeks.length;
   });
 
-  console.log(totalWeeks)
 
-  let j = 0;
   users.forEach((user) => {
     let totalCommits = user.total;
 
     user.weeks.forEach(week => {
       totalAdditions += week.a;
       totalDeletions += week.d;
-
-      if (j < totalWeeks) {
-        let date = moment.unix(week.w).format("DD/MM/YYYY");
-        dateTestArr.push(date);
-
-        j++;
-      }
     });
-
-    //dropdown menu test
 
 
 
@@ -62,30 +44,16 @@ const generateTable = (users) => {
     totalDeletions = 0;
   })
 
-  var select = document.getElementById("example-select");
-  for (index in dateTestArr) {
-    select.options[select.options.length] = new Option(dateTestArr[index], index);
-  }
-
-
-
   document.getElementById("data__table").innerHTML = tableContents;
 
 
-  drawPieChart(users, totalUserInputs);
-
-
-
-
-  //test
-
-  console.log(dateTestArr);
+  drawPieChart(users, totalUserInputs, dateTestArr);
 }
 
 
 
 
-const drawPieChart = ((users, pieArrayTotals) => {
+const drawPieChart = ((users, pieArrayTotals, dateTestArr) => {
   // CHART JS
   let pieArrayNames = [];
   users.forEach((user) => {
@@ -143,12 +111,23 @@ const drawPieChart = ((users, pieArrayTotals) => {
     options: options
   })
 
-  drawBarChart(users, pieArrayNames);
+  drawBarChart(users, pieArrayNames, dateTestArr);
 
 });
 
 
-const drawBarChart = (users, barArrayNames) => {
+const drawBarChart = (users, barArrayNames, dateTestArr) => {
+
+  let date = document.getElementById('start-date').value;
+  let timeFrame = document.getElementById('timeframe').value;
+  let dateRange = dateTestArr.splice(date, timeFrame);
+
+  console.log("fssffsd")
+  console.log(dateRange);
+
+
+
+
 
   let colorArray = ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#f7ef64", "#218b82", "#c54b6c", "#FFFAFA", "#696969", "#d291bc", "#dcfffb"];
 
@@ -177,9 +156,7 @@ const drawBarChart = (users, barArrayNames) => {
 
 
   let data = {
-    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6',
-      'Week 7', 'Week 8', 'Week 9', 'Week 10', 'Week 11', 'Week 12'
-    ],
+    labels: dateRange,
     datasets: dataset
   }
 
@@ -280,7 +257,7 @@ const showData = () => {
   getJSON(userURL.value).then((response) => {
     jsonData = response;
 
-    generateTable(jsonData.data);
+    getDates(jsonData.data);
   })
 }
 
@@ -312,8 +289,15 @@ const changeVisibility = (className) => {
   element[2].style.visibility = "hidden";
 }
 
-searchButton.addEventListener("click", () => {
-  showData();
+const getTimeFrame = () => {
+  let date = document.getElementById('start-date').value;
+  let timeframe = document.getElementById('timeframe').value;
+
+  console.log(date)
+  console.log(timeframe)
+
+
+
   animate("id", "grid-2", "fadeInLeft");
   animate("id", "grid-3", "fadeInRight");
   animate("id", "grid-4", "fadeInLeft");
@@ -323,8 +307,6 @@ searchButton.addEventListener("click", () => {
   animate("id", "title-3", "fadeIn");
   animate("id", "grid-6", "fadeInRight")
   //changeVisibility("hide");
-  animate("class", "toHide", "fadeOutLeft");
-  animate("id", "date-container", "fadeInRight")
 
   var delayInMilliseconds = 500;
   setTimeout(function() {
@@ -333,6 +315,46 @@ searchButton.addEventListener("click", () => {
       block: 'start'
     })
   }, delayInMilliseconds);
+}
+
+
+const getDates = (users) => {
+
+  let dateTestArr = [];
+  let totalWeeks = 0;
+
+  let j = 0;
+  users.forEach((user) => {
+    totalWeeks = user.weeks.length;
+
+    user.weeks.forEach(week => {
+
+      if (j < totalWeeks) {
+        let date = moment.unix(week.w).format("DD/MM/YYYY");
+        dateTestArr.push(date);
+
+        j++;
+      }
+    });
+  });
+
+  var select = document.getElementById("start-date");
+  for (index in dateTestArr) {
+    select.options[select.options.length] = new Option(dateTestArr[index], index);
+  }
+
+  timeButton.addEventListener("click", () => {
+    getTimeFrame();
+
+
+    generateTable(jsonData.data, dateTestArr);
+  })
+}
+
+searchButton.addEventListener("click", () => {
+  showData();
+  animate("class", "toHide", "fadeOutLeft");
+  animate("id", "date-container", "fadeInRight")
 })
 
 
