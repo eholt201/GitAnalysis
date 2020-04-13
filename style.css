@@ -1,6 +1,11 @@
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 html, body {
     max-width: 100%;
     overflow-x: hidden;
+    background-color: #313131;
 }
 
 body {
@@ -228,6 +233,7 @@ form.generate input[type=text] {
   background: #d3d3d3;
   border-radius: 10px 0px 0px 10px;
   margin-right: none;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 form.generate input {
@@ -243,12 +249,14 @@ form.generate button, #example-print {
   cursor: pointer;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   margin-left: none;
+  border-radius: 0px 10px 10px 0px;
 }
 
 form.generate button:hover, #example-print {
   background: #FFDEAD;
   color: #313131;
   border-radius: 0px 10px 10px 0px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 form.generate::after {
