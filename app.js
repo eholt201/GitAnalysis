@@ -1,8 +1,8 @@
 const userURL = document.querySelector("#search")
 const searchButton = document.querySelector(".searchButton")
-const timeButton = document.querySelector("#time-period-btn")
 const firstUsername = document.querySelector(".user__one-name")
 const firstContributions = document.querySelector(".user__one-contributions")
+const timeframeDropdown = document.querySelector("#timeframe");
 
 let jsonData = "";
 
@@ -343,7 +343,7 @@ const getDates = (users) => {
     select.options[select.options.length] = new Option(dateTestArr[index], index);
   }
 
-  timeButton.addEventListener("click", () => {
+  timeframeDropdown.addEventListener("change", () => {
     getTimeFrame();
 
     animate("class", "date-hide", "fadeOutLeft");
