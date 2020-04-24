@@ -256,8 +256,13 @@ const getJSON = async (userURL) => {
 const showData = () => {
   getJSON(userURL.value).then((response) => {
     jsonData = response;
-
-    getDates(jsonData.data);
+    if (response.data.message === "Not Found") {
+      alert("Invalid Link: Enter link in the format 'https://github.com/AdminUser/Repository'")
+    } else {
+      animate("class", "toHide", "fadeOutLeft");
+      animate("id", "date-container", "fadeInRight")
+      getDates(jsonData.data);
+    }
   })
 }
 
@@ -354,8 +359,6 @@ const getDates = (users) => {
 
 searchButton.addEventListener("click", () => {
   showData();
-  animate("class", "toHide", "fadeOutLeft");
-  animate("id", "date-container", "fadeInRight")
 })
 
 
