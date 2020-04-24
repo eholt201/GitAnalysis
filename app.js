@@ -1,7 +1,5 @@
 const userURL = document.querySelector("#search")
 const searchButton = document.querySelector(".searchButton")
-const firstUsername = document.querySelector(".user__one-name")
-const firstContributions = document.querySelector(".user__one-contributions")
 const timeframeDropdown = document.querySelector("#timeframe");
 
 let jsonData = "";
@@ -13,13 +11,14 @@ const generateTable = (users, dateTestArr) => {
   let totalUserInputs = [];
   let overallTeamContribution = 0;
 
+  // loop through JSON object to calulate total team input
   users.forEach((user) => {
     user.weeks.forEach((week) => {
       overallTeamContribution += (week.a - week.d);
     });
   });
 
-
+  // calculating total individual additions and deletions of each user
   users.forEach((user) => {
     let totalCommits = user.total;
 
@@ -29,9 +28,10 @@ const generateTable = (users, dateTestArr) => {
     });
 
 
-
+    //calculating percentage contributed for each user
     let percentageContribution = (((totalAdditions - totalDeletions) / overallTeamContribution) * 100).toFixed(1);
 
+    //formatting and populating table to be passed to grid element
     tableContents += `<tr>`;
     tableContents += `<td>${user.author.login}</td>`;
     tableContents += `<td>${user.total}</td>`;
@@ -54,12 +54,14 @@ const generateTable = (users, dateTestArr) => {
 
 
 const drawPieChart = ((users, pieArrayTotals, dateTestArr) => {
-  // CHART JS
+
   let pieArrayNames = [];
   users.forEach((user) => {
     pieArrayNames.push(user.author.login)
   });
 
+
+  // formatting data to be accepted by Chart.js
   let data = {
     datasets: [{
       backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#f7ef64", "#218b82", "#c54b6c", "#FFFAFA", "#696969", "#d291bc", "#dcfffb"],
@@ -86,6 +88,7 @@ const drawPieChart = ((users, pieArrayTotals, dateTestArr) => {
     tooltips: {
       callbacks: {
         label: function(tooltipItem, data) {
+          //making percentages contributed viewable via tooltip
           var dataset = data.datasets[tooltipItem.datasetIndex];
           var meta = dataset._meta[Object.keys(dataset._meta)[0]];
           var total = meta.total;
@@ -105,6 +108,7 @@ const drawPieChart = ((users, pieArrayTotals, dateTestArr) => {
   var ctx = $('#piechart');
   var ctx = 'piechart';
 
+  // passing finalised calculated data to Chart.js
   var myPieChart = new Chart(ctx, {
     type: 'pie',
     data: data,
@@ -118,19 +122,14 @@ const drawPieChart = ((users, pieArrayTotals, dateTestArr) => {
 
 const drawBarChart = (users, barArrayNames, dateTestArr) => {
 
+  // retrieving start date and timeframe from user
   let date = document.getElementById('start-date').value;
   let timeFrame = document.getElementById('timeframe').value;
   let dateRange = dateTestArr.splice(date, timeFrame);
 
-  console.log("fssffsd")
-  console.log(dateRange);
-
-
-
-
-
   let colorArray = ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#f7ef64", "#218b82", "#c54b6c", "#FFFAFA", "#696969", "#d291bc", "#dcfffb"];
 
+  // factory function used for formatting data to be passed to bar chart
   const userMaker = (username, backgroundColor, data) => {
     return {
       label: username,
@@ -143,13 +142,14 @@ const drawBarChart = (users, barArrayNames, dateTestArr) => {
   let i = 0;
   let weekArray = [];
 
+  // Retrieving valid data based on start date and timeframe then passing to the factory function to be formatted
   users.forEach((user) => {
-    let twelveWeeks = user.weeks.slice(0, 12);
-    let twelveWeekCommits = [];
-    twelveWeeks.forEach((week) => {
-      twelveWeekCommits.push(week.c);
+    let timePeriod = user.weeks.slice(0, timeFrame);
+    let timePeriodCommits = [];
+    timePeriod.forEach((week) => {
+      timePeriodCommits.push(week.c);
     })
-    weekArray.push(twelveWeekCommits);
+    weekArray.push(timePeriodCommits);
     dataset.push(userMaker(user.author.login, colorArray[i], weekArray[i]))
     i++;
   })
@@ -174,13 +174,12 @@ const drawBarChart = (users, barArrayNames, dateTestArr) => {
   var ctx = $('#barchart');
   var ctx = 'barchart';
 
+  // Passing data to Chart.js
   var myBarChart = new Chart(ctx, {
     type: 'bar',
     data: data,
     options: options
   })
-
-  console.log(dataset);
 
   calculateBehaviours(users);
 }
@@ -190,9 +189,9 @@ const calculateBehaviours = (users) => {
 
   let behaviourContents = "";
 
-  //for behavior table
   let tableArr = [];
 
+  // Calculating average behaviours per commit to be placed in behaviour table
   users.forEach((user) => {
     let totalCommits = user.total;
     let totalAdditions = 0;
@@ -206,11 +205,6 @@ const calculateBehaviours = (users) => {
     let avgAdditions = (totalAdditions / totalCommits).toFixed();
     let avgDeletions = (totalDeletions / totalCommits).toFixed();
 
-    let statement = `${user.author.login} had an average of ${avgAdditions} additions and ${avgDeletions} deletions per commit made.`
-    behaviourArr.push(statement);
-
-    behaviourContents += `<p>${statement}</p>`;
-
     // for behaviour table
     const tableRow = {
       user: user.author.login,
@@ -219,15 +213,12 @@ const calculateBehaviours = (users) => {
     }
     tableArr.push(tableRow);
   })
-  console.log(behaviourArr);
-
-  //document.getElementById("grid-5").innerHTML = behaviourContents;
 
   behaviourTable(tableArr);
 }
 
 const behaviourTable = (behaviourArr) => {
-  console.log(behaviourArr)
+  
   let tableContents = "";
 
   behaviourArr.forEach((row) => {
@@ -239,7 +230,7 @@ const behaviourTable = (behaviourArr) => {
   document.getElementById("behaviour-table-body").innerHTML = tableContents;
 }
 
-
+// Retrieves data from Github API
 const getJSON = async (userURL) => {
   const userInput = userURL.substring(19)
   const api_call = await fetch(`https://api.github.com/repos/${userInput}/stats/contributors`);
@@ -252,12 +243,12 @@ const getJSON = async (userURL) => {
 
 
 
-
+//  Confirms link entered has returned a valid JSON Object with data
 const showData = () => {
   getJSON(userURL.value).then((response) => {
     jsonData = response;
     if (response.data.message === "Not Found") {
-      alert("Invalid Link: Enter link in the format 'https://github.com/AdminUser/Repository'")
+      alert("Invalid Link: Enter link in the format 'https://github.com/AdminUser/RepositoryName'")
     } else {
       animate("class", "toHide", "fadeOutLeft");
       animate("id", "date-container", "fadeInRight")
@@ -266,6 +257,7 @@ const showData = () => {
   })
 }
 
+// Styling to animate components
 const animate = (option, name, animation) => {
   if (option === "id") {
     var element = document.getElementById(name);
@@ -286,6 +278,7 @@ const animate = (option, name, animation) => {
   }
 }
 
+// Removes elements such as link entry box once link has been entered
 const changeVisibility = (className) => {
   var element = document.getElementsByClassName(className);
 
@@ -294,14 +287,10 @@ const changeVisibility = (className) => {
   element[2].style.visibility = "hidden";
 }
 
+// Retrieves start date and timeframe from user
 const getTimeFrame = () => {
   let date = document.getElementById('start-date').value;
   let timeframe = document.getElementById('timeframe').value;
-
-  console.log(date)
-  console.log(timeframe)
-
-
 
   animate("id", "grid-2", "fadeInLeft");
   animate("id", "grid-3", "fadeInRight");
@@ -311,8 +300,8 @@ const getTimeFrame = () => {
   animate("id", "title-2", "fadeIn");
   animate("id", "title-3", "fadeIn");
   animate("id", "grid-6", "fadeInRight")
-  //changeVisibility("hide");
 
+  // Delays in order for Charts to be calculated before animating into view
   var delayInMilliseconds = 500;
   setTimeout(function() {
     document.getElementById('title-1').scrollIntoView({
@@ -322,7 +311,8 @@ const getTimeFrame = () => {
   }, delayInMilliseconds);
 }
 
-
+// Loops through JSON Object to retrieve dates to offer to the user, using moment.js library
+// to convert UNIX timestamps to "DD/MM/YYYY" format
 const getDates = (users) => {
 
   let dateTestArr = [];
@@ -348,6 +338,7 @@ const getDates = (users) => {
     select.options[select.options.length] = new Option(dateTestArr[index], index);
   }
 
+  // Listens to date and tiemframe being selected so analysis can then be performed
   timeframeDropdown.addEventListener("change", () => {
     getTimeFrame();
 
@@ -362,7 +353,7 @@ searchButton.addEventListener("click", () => {
 })
 
 
-// test repos
+// some test repos
 // 4 contributors
 // https://github.com/kirstyadair/IP2-project
 // https://github.com/bmitch201/IP3
