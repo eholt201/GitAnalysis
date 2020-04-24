@@ -163,7 +163,7 @@ const drawBarChart = (users, barArrayNames, dateTestArr) => {
   let options = {
     title: {
       display: true,
-      text: 'Percentage-based Contributions by Week'
+      text: 'Activity-based Contributions by Week'
     }
   }
 
@@ -218,7 +218,7 @@ const calculateBehaviours = (users) => {
 }
 
 const behaviourTable = (behaviourArr) => {
-  
+
   let tableContents = "";
 
   behaviourArr.forEach((row) => {
