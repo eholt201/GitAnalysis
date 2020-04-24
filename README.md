@@ -1,6 +1,6 @@
 # GitAnalysis
 
-Available here: eholt201.github.io/GitAnalysis
+Available [here](https://eholt201.github.io/GitAnalysis): eholt201.github.io/GitAnalysis
 
 ##Some Test Repositories to use
 
